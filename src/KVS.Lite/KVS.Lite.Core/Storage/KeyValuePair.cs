@@ -47,21 +47,49 @@ public class KeyValueStore
         return status;
     }
 
-    public object Get(string key)
+    public StatusProtocol Get(string key)
     {
-        if (expirationTime.ContainsKey(key) && expirationTime[key] < DateTime.UtcNow)
-        {
-            keyValuePairs.Remove(key);
-            expirationTime.Remove(key);
-            System.Console.WriteLine($"Removing key {key} as it reached the ttl");
-            return null;
-        }
-        return keyValuePairs[key];
+        var status = new StatusProtocol();
         
+        if (string.IsNullOrEmpty(key))
+        {
+            status.Status = StatusCode.Error;
+            status.Message = "Key is null or empty";
+            return status;
+        }
+
+        if (!KeyExists(key))
+        {
+            status.Status = StatusCode.Error;
+            status.Message = "Key does not exist!";
+            return status;
+        }
+
+        if (expirationTime[key] >= DateTime.UtcNow)
+        {
+            status.Status = StatusCode.Sucess;
+            status.Message = StatusCode.Sucess;
+            status.Value = keyValuePairs[key];
+            return status;
+        }
+        
+        RemoveExpiredKey(key);
+        status.Status = StatusCode.Error;
+        status.Message = "Key does not exist!";
+        return status;
     }
 
     private bool KeyExists(string key)
     {
         return keyValuePairs.ContainsKey(key) && expirationTime.ContainsKey(key);
+    }
+
+    private void RemoveExpiredKey(string key)
+    {
+        if (expirationTime[key] < DateTime.UtcNow)
+        {
+            keyValuePairs.Remove(key);
+            expirationTime.Remove(key);
+        }
     }
 }
