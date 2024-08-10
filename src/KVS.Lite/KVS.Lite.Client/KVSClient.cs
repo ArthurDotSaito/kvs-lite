@@ -21,9 +21,11 @@ public class KVSClient
         _reader = new StreamReader(_stream, Encoding.ASCII);
     }
 
-    public string Set(string message)
+    public string Set(string key, string value, string timeToLive)
     {
-        _writer.WriteLine(message);
+        string command = $"{{\"Operation\": \"SET\", \"key\": \"{key}\", \"value\": \"{value}\",\"ttl\": \"{timeToLive}\"}}";
+        _writer.WriteLine(command);
+        
         string response = _reader.ReadLine();
         Console.WriteLine(response);
 

@@ -14,10 +14,10 @@ public class ClientController : Controller, IDisposable
     
     [HttpGet]
     [Route("set")]
-    public IActionResult Set([FromQuery] string message)
+    public IActionResult Set([FromQuery] string key, string value, string timeToLeave)
     {
             
-        var res = _client.Set(message);
+        var res = _client.Set(key, value, timeToLeave);
             
         return Ok(res);
     }
