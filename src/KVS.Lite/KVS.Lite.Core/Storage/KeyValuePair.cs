@@ -73,9 +73,38 @@ public class KeyValueStore
             return status;
         }
         
-        RemoveExpiredKey(key);
+        CheckAndRemoveExpiredKey(key);
         status.Status = StatusCode.Error;
         status.Message = "Key does not exist!";
+        return status;
+    }
+
+    public StatusProtocol Delete(string key)
+    {
+        var status = new StatusProtocol();
+        if (string.IsNullOrEmpty(key))
+        {
+            status.Status = StatusCode.Error;
+            status.Message = "Key is null or empty";
+            return status;
+        }
+        
+        if (!KeyExists(key))
+        {
+            status.Status = StatusCode.Error;
+            status.Message = "Key does not exist!";
+            return status;
+        }
+        
+        CheckAndRemoveExpiredKey(key);
+
+        if (keyValuePairs.Remove(key))
+        {
+            expirationTime.Remove(key);
+        }
+        
+        status.Status = StatusCode.Sucess; 
+        status.Message = "Key removed successfully"; 
         return status;
     }
 
@@ -84,7 +113,7 @@ public class KeyValueStore
         return keyValuePairs.ContainsKey(key) && expirationTime.ContainsKey(key);
     }
 
-    private void RemoveExpiredKey(string key)
+    private void CheckAndRemoveExpiredKey(string key)
     {
         if (expirationTime[key] < DateTime.UtcNow)
         {
