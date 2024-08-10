@@ -1,3 +1,5 @@
+using KVS.Lite.Console.Model;
+
 namespace KVS.Lite.Console.Storage;
 
 public class KeyValueStore
@@ -12,11 +14,37 @@ public class KeyValueStore
         expirationTime = new Dictionary<string, DateTime>();
     }
 
-    public void Set(string key, object value, int ttl = -1)
+    public StatusProtocol Set(string key, object value, int ttl = -1)
     {
-        keyValuePairs[key] = value;
-        var dateTime = (ttl == -1) ? DateTime.MaxValue : DateTime.UtcNow.Add(TimeSpan.FromSeconds(ttl));
-        expirationTime[key] = dateTime;
+        var status = new StatusProtocol();
+        try
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                status.Status = StatusCode.Error;
+                status.Message = "Key is null or empty";
+                return status;
+            }
+
+            if (KeyExists(key))
+            {
+                status.Status = StatusCode.Error;
+                status.Message = "Key already exist!";
+                return status;
+            }
+
+            keyValuePairs[key] = value;
+            var dateTime = (ttl == -1) ? DateTime.MaxValue : DateTime.UtcNow.Add(TimeSpan.FromSeconds(ttl));
+            expirationTime[key] = dateTime;
+        }
+        catch (Exception ex)
+        {
+            status.Status = StatusCode.Error;
+            status.Message = ex.Message;
+        }
+
+        status.Message = "Successfully stored!";
+        return status;
     }
 
     public object Get(string key)
@@ -30,5 +58,10 @@ public class KeyValueStore
         }
         return keyValuePairs[key];
         
+    }
+
+    private bool KeyExists(string key)
+    {
+        return keyValuePairs.ContainsKey(key) && expirationTime.ContainsKey(key);
     }
 }
