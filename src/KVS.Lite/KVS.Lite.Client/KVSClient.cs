@@ -1,9 +1,9 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace KVS.Lite.Client;
+namespace KVS.Lite.KVSClient;
 
-public class Client
+public class KVSClient
 {
     private const int Port = 6355;
     private const string Host = "localhost";
@@ -12,7 +12,7 @@ public class Client
     private StreamWriter _writer;
     private StreamReader _reader;
 
-    public Client()
+    public KVSClient()
     {
         Console.WriteLine($"$KVLite Client initiated for {Host}:{Port}");
         _client = new TcpClient(Host, Port);
@@ -21,9 +21,11 @@ public class Client
         _reader = new StreamReader(_stream, Encoding.ASCII);
     }
 
-    public string Set(string message)
+    public string Set(string key, string value, string timeToLive)
     {
-        _writer.WriteLine(message);
+        string command = $"{{\"Operation\": \"SET\", \"key\": \"{key}\", \"value\": \"{value}\",\"ttl\": \"{timeToLive}\"}}";
+        _writer.WriteLine(command);
+        
         string response = _reader.ReadLine();
         Console.WriteLine(response);
 

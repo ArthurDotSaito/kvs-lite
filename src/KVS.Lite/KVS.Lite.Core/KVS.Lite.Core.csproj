@@ -8,4 +8,13 @@
         <RootNamespace>KVS.Lite.Console</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Include="Server\Protocol\InputParser.cs" />
+      <Compile Include="Server\Protocol\OperationType.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
 </Project>

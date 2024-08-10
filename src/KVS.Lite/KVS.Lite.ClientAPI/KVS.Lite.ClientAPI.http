@@ -1,0 +1,6 @@
+@KVS.Lite.ClientAPI_HostAddress = http://localhost:5272
+
+GET {{KVS.Lite.ClientAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
