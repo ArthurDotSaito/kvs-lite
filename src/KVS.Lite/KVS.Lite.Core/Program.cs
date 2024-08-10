@@ -1,6 +1,4 @@
-﻿
-
-using KVS.Lite.Console;
+﻿using KVS.Lite.Console.Storage;
 
 Console.WriteLine("Starting KVS Store");
 

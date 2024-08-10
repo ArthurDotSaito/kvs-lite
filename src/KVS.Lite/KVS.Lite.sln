@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVS.Lite.Console", "KVS.Lite.Console\KVS.Lite.Console.csproj", "{75206818-63EB-4FDA-8BB3-362C6EDF97A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVS.Lite.Core", "KVS.Lite.Core\KVS.Lite.Core.csproj", "{75206818-63EB-4FDA-8BB3-362C6EDF97A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVS.Lite.Client", "KVS.Lite.Client\KVS.Lite.Client.csproj", "{41015A80-9BE5-48DD-BE9A-D842D18383E0}"
 EndProject
