@@ -1,9 +1,10 @@
-namespace KVS.Lite.Console;
+namespace KVS.Lite.Console.Storage;
 
 public class KeyValueStore
 {
     private readonly Dictionary<string, object> keyValuePairs;
     private readonly Dictionary<string, DateTime> expirationTime;
+    private readonly TimeSpan defaultTtl = TimeSpan.MaxValue;
 
     public KeyValueStore()
     {
