@@ -14,7 +14,7 @@ public class KeyValueStore
         expirationTime = new Dictionary<string, DateTime>();
     }
 
-    public StatusProtocol Set(string key, object value, int ttl = -1)
+    public StatusProtocol Set(string key, object value, double ttl = -1)
     {
         var status = new StatusProtocol();
         try
