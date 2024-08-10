@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVS.Lite.Core", "KVS.Lite.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVS.Lite.Client", "KVS.Lite.Client\KVS.Lite.Client.csproj", "{41015A80-9BE5-48DD-BE9A-D842D18383E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVS.Lite.ClientAPI", "KVS.Lite.ClientAPI\KVS.Lite.ClientAPI.csproj", "{29CF947F-F6D2-4F66-94BA-84FE0AC8C3FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{41015A80-9BE5-48DD-BE9A-D842D18383E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41015A80-9BE5-48DD-BE9A-D842D18383E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41015A80-9BE5-48DD-BE9A-D842D18383E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CF947F-F6D2-4F66-94BA-84FE0AC8C3FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CF947F-F6D2-4F66-94BA-84FE0AC8C3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CF947F-F6D2-4F66-94BA-84FE0AC8C3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CF947F-F6D2-4F66-94BA-84FE0AC8C3FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
