@@ -1,12 +1,10 @@
-﻿using KVS.Lite.Console.Storage;
+﻿using KVS.Lite.Console.Server;
+using KVS.Lite.Console.Storage;
 
 Console.WriteLine("Starting KVS Store");
 
 var kvStore = new KeyValueStore();
 
-kvStore.Set("Test Key", "Test Value", 5);
+var server = new Server(kvStore);
 
-Console.WriteLine(kvStore.Get("Test Key"));
-
-Thread.Sleep(6000);
-Console.WriteLine(kvStore.Get("Test Key"));
+server.Start();
