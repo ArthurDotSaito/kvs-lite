@@ -21,5 +21,25 @@ public class ClientController : Controller, IDisposable
             
         return Ok(res);
     }
+    
+    [HttpGet]
+    [Route("get")]
+    public IActionResult Get([FromQuery] string key)
+    {
+            
+        var res = _client.Get(key);
+            
+        return Ok(res);
+    }
+    
+    [HttpGet]
+    [Route("delete")]
+    public IActionResult Delete([FromQuery] string key)
+    {
+            
+        var res = _client.Delete(key);
+            
+        return Ok(res);
+    }
 
 }
