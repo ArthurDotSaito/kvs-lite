@@ -23,7 +23,8 @@ public class Server
     {
         _listener.Start();
         System.Console.WriteLine($"Server started. Listening on port {Port}");
-
+        
+        
         while (true)
         {
             var client = _listener.AcceptTcpClient();

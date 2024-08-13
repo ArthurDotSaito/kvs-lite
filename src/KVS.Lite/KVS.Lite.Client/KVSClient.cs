@@ -31,4 +31,15 @@ public class KVSClient
 
         return response;
     }
+
+    public string Get(string key)
+    {
+        string command = $"{{\"Operation\": \"SET\", \"key\": \"{key}\"}}";
+        _writer.WriteLine(command);
+
+        string response = _reader.ReadLine();
+        Console.WriteLine(response);
+
+        return response;
+    }
 }
