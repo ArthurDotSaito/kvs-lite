@@ -34,7 +34,18 @@ public class KVSClient
 
     public string Get(string key)
     {
-        string command = $"{{\"Operation\": \"SET\", \"key\": \"{key}\"}}";
+        string command = $"{{\"Operation\": \"GET\", \"key\": \"{key}\"}}";
+        _writer.WriteLine(command);
+
+        string response = _reader.ReadLine();
+        Console.WriteLine(response);
+
+        return response;
+    }
+    
+    public string Delete(string key)
+    {
+        string command = $"{{\"Operation\": \"DELETE\", \"key\": \"{key}\"}}";
         _writer.WriteLine(command);
 
         string response = _reader.ReadLine();
@@ -43,9 +54,10 @@ public class KVSClient
         return response;
     }
 
+
     public string Update(string key)
     {
-        string command = $"{{\"Operation\": \"SET\", \"key\": \"{key}\"}}";
+        string command = $"{{\"Operation\": \"UPDATE\", \"key\": \"{key}\"}}";
         _writer.WriteLine(command);
 
         string response = _reader.ReadLine();
