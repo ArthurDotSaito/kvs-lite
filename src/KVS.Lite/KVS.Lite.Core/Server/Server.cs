@@ -1,6 +1,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using KVS.Lite.Console.Model;
+using KVS.Lite.Console.Server.Protocol;
 using KVS.Lite.Console.Storage;
 
 namespace KVS.Lite.Console.Server;
@@ -75,6 +77,34 @@ public class Server
         }
         
         client.Close();
+    }
+
+    private StatusProtocol ProcessRequest(string request)
+    {
+        var parser = new InputParser();
+        var command = parser.CommandParser(request);
+
+        if (command.Operation == "SET")
+        {
+            double ttl = -1;
+            if (!double.TryParse(command.Ttl, out ttl)) ttl = -1;
+
+            return this._keyValueStore.Set(command.Key, command.Value.ToString(), ttl);
+        }
+        else if (command.Operation == "GET")
+        {
+            return this._keyValueStore.Get(command.Key);
+        }
+        else if (command.Operation == "DELETE")
+        {
+            return this._keyValueStore.Delete(command.Key);
+        }
+        else if (command.Operation == "UPDATE")
+        {
+            return this._keyValueStore.Update(command.Key, command.Value.ToString());
+        }
+
+        return new StatusProtocol() { Status = StatusCode.Error, Message = "A Unexpected error ocurred." };
     }
     
     
