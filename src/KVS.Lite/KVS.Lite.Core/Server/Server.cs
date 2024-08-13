@@ -4,6 +4,7 @@ using System.Text;
 using KVS.Lite.Console.Model;
 using KVS.Lite.Console.Server.Protocol;
 using KVS.Lite.Console.Storage;
+using Newtonsoft.Json;
 
 namespace KVS.Lite.Console.Server;
 
@@ -47,24 +48,10 @@ public class Server
                 {
                     if (!stream.DataAvailable) break;
 
-                    var buffer = new byte[1024];
-                    var messageBuilder = new StringBuilder();
+                    var receivedDataRead = ReadCompleteMessage(stream);
+                    System.Console.WriteLine(receivedDataRead);
 
-                    while (true)
-                    {
-                        var bytesRead = stream.Read(buffer, 0, buffer.Length);
-                        messageBuilder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
-
-                        if (stream.DataAvailable) continue;
-
-                        break;
-                    }
-
-                    var dataReceived = Encoding.UTF8.GetBytes(messageBuilder.ToString());
-                    var stringReceived = Encoding.UTF8.GetString(dataReceived);
-                    System.Console.WriteLine(stringReceived);
-
-                    var encodedResponse = Encoding.UTF8.GetBytes(stringReceived);
+                    var encodedResponse = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(receivedDataRead));
                     stream.Write(encodedResponse, 0, encodedResponse.Length);
                 }
                 catch (Exception ex)
@@ -79,6 +66,23 @@ public class Server
         }
         
         client.Close();
+    }
+
+    private byte[] ReadCompleteMessage(NetworkStream dataStream)
+    {
+        var buffer = new byte[1024];
+        var messageBuilder = new StringBuilder();
+        while (true)
+        {
+            var bytesRead = dataStream.Read(buffer, 0, buffer.Length);
+            messageBuilder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+
+            if (dataStream.DataAvailable) continue;
+
+            break;
+        }
+
+        return Encoding.UTF8.GetBytes(messageBuilder.ToString());
     }
 
     private async Task ClientListenerAsync()
