@@ -26,12 +26,6 @@ public class Server
         System.Console.WriteLine($"Server started. Listening on port {Port}");
 
         ClientListenerAsync().ConfigureAwait(false);
-        
-        while (true)
-        {
-            var client = _listener.AcceptTcpClient();
-            Task.Run(() => ClientHandler(client));
-        }
     }
 
     private void ClientHandler(TcpClient client)
