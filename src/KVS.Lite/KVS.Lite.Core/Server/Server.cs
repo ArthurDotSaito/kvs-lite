@@ -23,12 +23,13 @@ public class Server
     {
         _listener.Start();
         System.Console.WriteLine($"Server started. Listening on port {Port}");
-        
+
+        ClientListenerAsync().ConfigureAwait(false);
         
         while (true)
         {
             var client = _listener.AcceptTcpClient();
-            ClientHandler(client);
+            Task.Run(() => ClientHandler(client));
         }
     }
 
@@ -78,6 +79,15 @@ public class Server
         }
         
         client.Close();
+    }
+
+    private async Task ClientListenerAsync()
+    {
+        while (true)
+        {
+            var client = await _listener.AcceptTcpClientAsync();
+            Task.Run(() => ClientHandler(client));
+        }
     }
 
     private StatusProtocol ProcessRequest(string request)
