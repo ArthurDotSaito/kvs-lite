@@ -27,11 +27,11 @@ public class Server
         while (true)
         {
             var client = _listener.AcceptTcpClient();
-            
+            ClientHandler(client);
         }
     }
 
-    public void ClientHandler(TcpClient client)
+    private void ClientHandler(TcpClient client)
     {
         try
         {
