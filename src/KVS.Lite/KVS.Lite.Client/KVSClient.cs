@@ -42,4 +42,23 @@ public class KVSClient
 
         return response;
     }
+
+    public string Update(string key)
+    {
+        string command = $"{{\"Operation\": \"SET\", \"key\": \"{key}\"}}";
+        _writer.WriteLine(command);
+
+        string response = _reader.ReadLine();
+        Console.WriteLine(response);
+
+        return response;
+    }
+
+    public void Dispose()
+    {
+        _writer.Dispose();
+        _reader.Dispose();
+        _stream.Dispose();
+        _client.Close();
+    }
 }
