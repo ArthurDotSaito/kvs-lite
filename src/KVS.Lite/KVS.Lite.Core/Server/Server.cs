@@ -42,10 +42,13 @@ public class Server
                 {
                     if (!stream.DataAvailable) break;
 
-                    var receivedDataRead = ReadCompleteMessage(stream);
-                    System.Console.WriteLine(receivedDataRead);
+                    var receivedData = ReadCompleteMessage(stream);
+                    var receivedDataString = Encoding.UTF8.GetString(receivedData);
+                    System.Console.WriteLine(receivedDataString);
 
-                    var encodedResponse = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(receivedDataRead));
+                    Object response = ProcessRequest(receivedDataString);
+
+                    var encodedResponse = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
                     stream.Write(encodedResponse, 0, encodedResponse.Length);
                 }
                 catch (Exception ex)
